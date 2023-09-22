@@ -1,2 +1,63 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# T4a, 4b, 
+# heittosarja_gui_4c -> 4c, 4d
+
+import json
+import tiedosto
+import random
+class Heittosarja:
+    """
+    Luokka Heittosarja kuvaa nopalla heittettyjä sarjoja ja kerää niistä listan.
+    """
+    _tahot = -1
+    _heittoja = -1
+    _silmaluvut = None
+
+
+    def __init__(self, tahot, heittoja, silmaluvut):
+        """
+        Konstruktorimetodi.
+        """
+        self._tahot = tahot
+        self._heittoja = heittoja
+        self._silmaluvut = silmaluvut
+    
+    def heita_sarja(self):
+        """
+        Arpoo luokan attribuuttien tahojen ja heittojen mukaisten arvot
+        ja tallentaa tulokset listaan silmaluvut. Palauttaa listan.
+        """
+        for numero in range(self._heittoja):
+            numero = random.randint(1, self._tahot)
+            self._silmaluvut.append(numero)
+            self._silmaluvut.sort()
+        
+        return self._silmaluvut
+
+    def kirjoita_tiedostoon(self):
+        """
+        Kirjoittaa heittosarjan tiedostoon Tulos.txt JSON-muodossa.
+        """
+    
+        nimi = f"Tulos.txt"
+        sisalto = {"Tahot": self._tahot, "Heittoja": self._heittoja, "silmäluvut": self._silmaluvut}
+        json_teksti = json.dumps(sisalto, indent=2)
+        tiedosto.kirjoita_tiedosto(json_teksti, nimi)
+        
+    def __str__(self) -> str:
+        """
+        Metodi luokan sisällön palauttamiseen merkkijonona ("to sring")
+        """
+        tulos = f"{self._silmaluvut}"
+    
+        return tulos
+
+def main():
+    
+    # Heittosarja -luokan ilmentymä
+    silmalukurivi1 = Heittosarja(6, 12, [])
+    print(silmalukurivi1.__str__())
+
+if __name__ == "__main__":
+    main()
